@@ -27,7 +27,7 @@ GUIFILE = "./paranoid.glade"
 COMPTON = "compton.conf"
 
 def getbool(value):
-	# Function to find and return boolean variables of compton.conf
+	# Function to find and return boolean variables from compton.conf
 	for line in open(COMPTON, 'r'):
 		if re.search(value,line) != None:
 			if re.search("true",line) != None:
@@ -36,7 +36,7 @@ def getbool(value):
 				return False
 				
 def getint(value):
-	# Function to find and return values of compton.conf
+	# Function to find and return values from compton.conf
 	for line in open(COMPTON, 'r'):
 		if re.search(value,line) != None:
 			# Clear the line
