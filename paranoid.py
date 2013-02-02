@@ -118,6 +118,7 @@ class GUI():
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
+		print "todo"
 
 	def shadow_switch(self, obj, opt = None):
 
