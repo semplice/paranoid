@@ -25,7 +25,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <child>
-              <object class="GtkBox" id="box3">
+              <object class="GtkBox" id="shadow-box">
                 <property name="width_request">517</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -43,7 +43,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkGrid" id="grid2">
+                  <object class="GtkGrid" id="shadow-grid">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -268,7 +268,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label12">
+              <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">label</property>
@@ -278,10 +278,35 @@
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label2">
+              <object class="GtkBox" id="box1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Opacity</property>
+                <child>
+                  <object class="GtkLabel" id="lb-fading">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_right">6</property>
+                    <property name="label" translatable="yes">Fading</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSwitch" id="fading">
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="use_action_appearance">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -289,10 +314,97 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label7">
+              <object class="GtkBox" id="box3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">label</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkFixed" id="fixed8">
+                    <property name="height_request">45</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lb-menu-opacity">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="margin_top">1</property>
+                    <property name="margin_bottom">18</property>
+                    <property name="label" translatable="yes">menu opacity</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScale" id="menu-opacity">
+                    <property name="width_request">362</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">60</property>
+                    <property name="margin_right">60</property>
+                    <property name="hexpand">True</property>
+                    <property name="restrict_to_fill_level">False</property>
+                    <property name="fill_level">0</property>
+                    <property name="round_digits">0</property>
+                    <property name="digits">2</property>
+                    <property name="value_pos">left</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lb-inactive-opacity">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="margin_top">19</property>
+                    <property name="margin_bottom">18</property>
+                    <property name="label" translatable="yes">inactive opacity</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScale" id="inactive-opacity">
+                    <property name="width_request">362</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">60</property>
+                    <property name="margin_right">60</property>
+                    <property name="hexpand">True</property>
+                    <property name="restrict_to_fill_level">False</property>
+                    <property name="fill_level">0</property>
+                    <property name="round_digits">0</property>
+                    <property name="digits">2</property>
+                    <property name="value_pos">left</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
               <packing>
                 <property name="position">2</property>
@@ -302,7 +414,7 @@
               <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Fading</property>
+                <property name="label" translatable="yes">Opacity</property>
               </object>
               <packing>
                 <property name="position">2</property>
@@ -331,25 +443,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label9">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">label</property>
-              </object>
-              <packing>
-                <property name="position">4</property>
-              </packing>
+              <placeholder/>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label5">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Windows type settings</property>
-              </object>
-              <packing>
-                <property name="position">4</property>
-                <property name="tab_fill">False</property>
-              </packing>
+              <placeholder/>
             </child>
           </object>
           <packing>
@@ -367,12 +464,13 @@
                 <property name="label" translatable="yes">Other</property>
                 <property name="use_action_appearance">False</property>
                 <property name="width_request">100</property>
-                <property name="height_request">43</property>
+                <property name="height_request">31</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="margin_left">5</property>
                 <property name="margin_right">5</property>
+                <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
                 <property name="use_action_appearance">False</property>
               </object>
@@ -399,11 +497,12 @@
                 <property name="label" translatable="yes">Exit</property>
                 <property name="use_action_appearance">False</property>
                 <property name="width_request">100</property>
-                <property name="height_request">43</property>
+                <property name="height_request">31</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="margin_right">5</property>
+                <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
                 <property name="use_action_appearance">False</property>
               </object>
@@ -418,11 +517,12 @@
                 <property name="label" translatable="yes">Save &amp; apply</property>
                 <property name="use_action_appearance">False</property>
                 <property name="width_request">100</property>
-                <property name="height_request">43</property>
+                <property name="height_request">31</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="margin_right">5</property>
+                <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
                 <property name="use_action_appearance">False</property>
               </object>
