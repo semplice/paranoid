@@ -1,9 +1,9 @@
 # Shadow
 shadow = true;
 no-dnd-shadow = true;
-no-dock-shadow = false;
-clear-shadow = false;
-shadow-radius = 12;
+no-dock-shadow = true;
+clear-shadow = true;
+shadow-radius = 5;
 shadow-offset-x = -7;
 shadow-offset-y = -7;
 # shadow-opacity = 0.7;
@@ -16,8 +16,8 @@ shadow-ignore-shaped = false;
 
 # Opacity
 menu-opacity = 0.500000;
-inactive-opacity = 0.800000;
-frame-opacity = 0.700000;
+inactive-opacity = 0.8;
+frame-opacity = 0.7;
 inactive-opacity-override = false;
 alpha-step = 0.06;
 # inactive-dim = 0.2;
@@ -27,11 +27,11 @@ alpha-step = 0.06;
 blur-background-fixed = false;
 
 # Fading
-fading = false;
-fade-delta = 14.000000;
+fading = true;
+# fade-delta = 30;
 fade-in-step = 0.03;
 fade-out-step = 0.03;
-no-fading-openclose = false;
+# no-fading-openclose = true;
 
 # Other
 mark-wmwin-focused = true;
