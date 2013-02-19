@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# paranoid - compton configuration GUI
+# Paranoid - GTK+3 configuration tool for compton.
 # Copyright (C) 2013  Giuseppe "GsC_RuL3Z" Corti
 #
 # This program is free software: you can redistribute it and/or modify
@@ -66,7 +66,11 @@ class GUI():
 
 		# Get main window
 		self.main = self.builder.get_object("main")
+
+		# Get Settings window
+		self.settings = self.builder.get_object("settings")
 		
+		#### Main window
 		#
 		# Shadow
 		#
@@ -163,12 +167,40 @@ class GUI():
 		self.save = self.builder.get_object("save")
 		self.save.connect("clicked", self.save_apply)
 
+		# Settings button
+		self.settings_button = self.builder.get_object("settings_button")
+		self.settings_button.connect("clicked", self.show_settings)
+
+		#### Settings window
+		# Enable desktop effects checkbox
+		self.enable_effects = self.builder.get_object("enable-desktop-effects")
+
+		# Close button
+		self.cancel_settings = self.builder.get_object("cancel-settings")
+		self.cancel_settings.connect("clicked", self.close_settings)
+
+		# Save & apply button
+		self.save_settings = self.builder.get_object("save-settings")
+		#self.save_settings.connect("clicked", self.save_settings)
+
 		# Show it
 		if self.shadow.get_active() == False:
 			self.shadow_box.set_sensitive(False)
 		if self.fading.get_active() == False:
 			self.fading_box.set_sensitive(False)
 		if not donotshow: self.main.show_all()
+
+
+	def save_settings(self, obj, opt = None):
+		""" Save settings """
+
+	def show_settings(self, obj, opt = None):
+		# Show settings window
+		self.settings.show_all()
+
+	def close_settings(self, obj, opt = None):
+		# Close settings window
+		self.settings.destroy()
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
@@ -213,6 +245,9 @@ class GUI():
 		# Fix uppercase
 		old_config = (re.sub("False","false",old_config))
 		old_config = (re.sub("True","true",old_config))
+
+		# Float fix?
+		old_config = (re.sub("00000","",old_config))
 
 		# Debug
 		#print old_config

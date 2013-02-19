@@ -14,7 +14,8 @@
   <object class="GtkWindow" id="main">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Desktop effects preferences</property>
-    <property name="icon_name">applications-system</property>
+    <property name="window_position">center</property>
+    <property name="icon_name">preferences-desktop</property>
     <child>
       <object class="GtkBox" id="box2">
         <property name="visible">True</property>
@@ -53,7 +54,7 @@
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin_left">9</property>
-                        <property name="label" translatable="yes">clear shadow</property>
+                        <property name="label" translatable="yes">Clear shadow</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -69,7 +70,7 @@
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin_left">9</property>
-                        <property name="label" translatable="yes">panel shadow</property>
+                        <property name="label" translatable="yes">Panel shadow</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -99,24 +100,6 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="top_attach">0</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSwitch" id="panel_shadow">
-                        <property name="use_action_appearance">False</property>
-                        <property name="width_request">0</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="margin_left">30</property>
-                        <property name="margin_right">318</property>
-                        <property name="margin_bottom">9</property>
-                        <property name="use_action_appearance">False</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">1</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -159,6 +142,24 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="top_attach">3</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch" id="panel_shadow">
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">0</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">30</property>
+                        <property name="margin_right">318</property>
+                        <property name="margin_bottom">9</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -306,7 +307,7 @@
                       <object class="GtkSwitch" id="fading-openclose">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="margin_left">30</property>
                         <property name="use_action_appearance">False</property>
                       </object>
@@ -434,7 +435,9 @@
                     <property name="valign">start</property>
                     <property name="margin_top">1</property>
                     <property name="margin_bottom">7</property>
-                    <property name="label" translatable="yes">menu opacity</property>
+                    <property name="xalign">0.44999998807907104</property>
+                    <property name="yalign">0.47999998927116394</property>
+                    <property name="label" translatable="yes">Menu opacity</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -470,7 +473,7 @@
                     <property name="valign">start</property>
                     <property name="margin_top">15</property>
                     <property name="margin_bottom">9</property>
-                    <property name="label" translatable="yes">inactive opacity</property>
+                    <property name="label" translatable="yes">Inactive opacity</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -506,7 +509,7 @@
                     <property name="valign">start</property>
                     <property name="margin_top">15</property>
                     <property name="margin_bottom">9</property>
-                    <property name="label" translatable="yes">frame opacity</property>
+                    <property name="label" translatable="yes">Frame opacity</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -620,7 +623,7 @@
                   <object class="GtkSwitch" id="inactive-opacity-override">
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="margin_left">20</property>
                     <property name="margin_right">46</property>
                     <property name="use_action_appearance">False</property>
@@ -687,7 +690,7 @@
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="margin_left">9</property>
-                    <property name="label" translatable="yes">inactive opacity override </property>
+                    <property name="label" translatable="yes">Inactive opacity override </property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -703,7 +706,7 @@
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="margin_left">9</property>
-                    <property name="label" translatable="yes">shadow ignore shaped</property>
+                    <property name="label" translatable="yes">Shadow ignore shaped</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -719,7 +722,7 @@
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="margin_left">9</property>
-                    <property name="label" translatable="yes">mark wmwin focused</property>
+                    <property name="label" translatable="yes">Mark wmwin focused</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -735,7 +738,7 @@
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="margin_left">9</property>
-                    <property name="label" translatable="yes">detect rounded corners</property>
+                    <property name="label" translatable="yes">Detect rounded corners</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -751,7 +754,7 @@
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="margin_left">9</property>
-                    <property name="label" translatable="yes">blur background fixed</property>
+                    <property name="label" translatable="yes">Blur background fixed</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -810,7 +813,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="setting">
+              <object class="GtkButton" id="settings_button">
                 <property name="label" translatable="yes">Settings</property>
                 <property name="use_action_appearance">False</property>
                 <property name="width_request">100</property>
@@ -865,6 +868,7 @@
                 <property name="label" translatable="yes">Save &amp; apply</property>
                 <property name="use_action_appearance">False</property>
                 <property name="width_request">100</property>
+                <property name="height_request">30</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -884,6 +888,134 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="settings">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Settings</property>
+    <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="icon_name">preferences-desktop-personal</property>
+    <child>
+      <object class="GtkBox" id="box5">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFixed" id="fixed15">
+            <property name="height_request">14</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="box10">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkCheckButton" id="enable-desktop-effects">
+                <property name="label" translatable="yes">Enable desktop effects</property>
+                <property name="use_action_appearance">False</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="margin_left">15</property>
+                <property name="use_action_appearance">False</property>
+                <property name="xalign">0</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <object class="GtkBox" id="box9">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkButton" id="cancel-settings">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="use_action_appearance">False</property>
+                <property name="width_request">100</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="margin_left">5</property>
+                <property name="margin_right">5</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
+                <property name="use_action_appearance">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="fixed16">
+                <property name="width_request">94</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="save-settings">
+                <property name="label" translatable="yes">Save</property>
+                <property name="use_action_appearance">False</property>
+                <property name="width_request">100</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="margin_left">5</property>
+                <property name="margin_right">5</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
+                <property name="use_action_appearance">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
