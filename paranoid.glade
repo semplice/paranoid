@@ -11,7 +11,13 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-revert-to-saved</property>
+  </object>
   <object class="GtkDialog" id="main">
+    <property name="width_request">600</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Desktop effects preferences</property>
@@ -27,13 +33,13 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="settings_button">
-                <property name="label">gtk-preferences</property>
+                <property name="label">Defaults</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
+                <property name="image">image1</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -42,24 +48,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="exit">
-                <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="save">
-                <property name="label">gtk-apply</property>
+                <property name="label">gtk-close</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -947,7 +937,6 @@
     </child>
     <action-widgets>
       <action-widget response="0">settings_button</action-widget>
-      <action-widget response="0">exit</action-widget>
       <action-widget response="0">save</action-widget>
     </action-widgets>
   </object>

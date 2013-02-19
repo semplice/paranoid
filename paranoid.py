@@ -160,8 +160,8 @@ class GUI():
 		self.main.connect("destroy", lambda x: Gtk.main_quit())
 
 		# Exit button
-		self.exit = self.builder.get_object("exit")
-		self.exit.connect("clicked", Gtk.main_quit)
+		#self.exit = self.builder.get_object("exit")
+		#self.exit.connect("clicked", Gtk.main_quit)
 
 		# Save & apply button
 		self.save = self.builder.get_object("save")
@@ -216,7 +216,7 @@ class GUI():
 		# Open and read old configuration file
 		old_config_file = open(COMPTON,'r')
 		old_config = old_config_file.read()
-		old_config_file.close
+		old_config_file.close()
 
 		# Replace old values with new inputs
 		# Shadow settings
@@ -255,7 +255,9 @@ class GUI():
 		# Write new configuration file
 		new_config_file = open(COMPTON,'w')
 		new_config_file.write(old_config)
-		new_config_file.close
+		new_config_file.close()
+		
+		Gtk.main_quit()
 
 if __name__ == "__main__":
 	g = GUI()
