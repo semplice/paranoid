@@ -26,6 +26,10 @@ import string
 
 GUIFILE = "./paranoid.glade"
 COMPTON = "compton.conf"
+AUTOSTART = "~/.config/openbox/autostart"
+
+def getcomposite:
+
 
 def getbool(value):
 	# Function to find and return boolean variables from compton.conf
@@ -67,11 +71,13 @@ class GUI():
 		# Get main window
 		self.main = self.builder.get_object("main")
 
-		# Get Settings window
-		self.settings = self.builder.get_object("settings")
-		
-		#### Main window
-		#
+		# Get main switch
+		self.main_switch = self.builder.get_object("de-effects")	
+		self.main_switch.connect("button-press-event", self.main_switch_event)
+
+		# Get main notebook
+		self.notebook = self.builder.get_object("notebook")		
+	
 		# Shadow
 		#
 		# Get Box
@@ -159,29 +165,13 @@ class GUI():
 		# Connect destroy
 		self.main.connect("destroy", lambda x: Gtk.main_quit())
 
-		# Exit button
-		#self.exit = self.builder.get_object("exit")
-		#self.exit.connect("clicked", Gtk.main_quit)
-
 		# Save & apply button
 		self.save = self.builder.get_object("save")
 		self.save.connect("clicked", self.save_apply)
 
-		# Settings button
-		self.settings_button = self.builder.get_object("settings_button")
-		self.settings_button.connect("clicked", self.show_settings)
-
-		#### Settings window
-		# Enable desktop effects checkbox
-		self.enable_effects = self.builder.get_object("enable-desktop-effects")
-
-		# Close button
-		self.cancel_settings = self.builder.get_object("cancel-settings")
-		self.cancel_settings.connect("clicked", self.close_settings)
-
-		# Save & apply button
-		self.save_settings = self.builder.get_object("save-settings")
-		#self.save_settings.connect("clicked", self.save_settings)
+		# Defaults button
+		self.defaults_button = self.builder.get_object("defaults_button")
+		self.defaults_button.connect("clicked", self.defaults_settings)
 
 		# Show it
 		if self.shadow.get_active() == False:
@@ -191,16 +181,12 @@ class GUI():
 		if not donotshow: self.main.show_all()
 
 
-	def save_settings(self, obj, opt = None):
-		""" Save settings """
+	def defaults_settings(self, obj, opt = None):
+		""" Restore default values """
 
-	def show_settings(self, obj, opt = None):
-		# Show settings window
-		self.settings.show_all()
-
-	def close_settings(self, obj, opt = None):
-		# Close settings window
-		self.settings.destroy()
+	def main_switch_event(self, obj, opt = None):
+		# Switch Desktop effects on/off
+		self.notebook.set_sensitive(invertbool(self.main_switch.get_active()))
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
