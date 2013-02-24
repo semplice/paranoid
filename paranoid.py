@@ -17,39 +17,56 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 from gi.repository import Gtk
+from threading import Thread
 import gobject
 import os
 import re
 import string
 
 GUIFILE = "./paranoid.glade"
-COMPTON = "compton.conf"
+COMPTON = os.getenv('HOME') + "/.config/compton.conf"
 AUTOSTART = os.getenv('HOME') + "/.config/.composite_enabled"
 
 def getbool(value):
 	# Function to find and return boolean variables from compton.conf
+	lines = 0
 	for line in open(COMPTON, 'r'):
 		if re.search(value,line) != None:
-			if re.search(value,line) != None:
+			if re.search(value + " = true;",line) != None:
 				return True
 			else:
 				return False
+		else:
+			if lines == conflen():
+				return False
+		lines += 1
+		
+def conflen():
+	# Count compton.conf lines
+	lines = 0
+	for line in open(COMPTON, 'r'):
+		lines += 1
+	return lines-1
 				
 def getint(value):
 	# Function to find and return values from compton.conf
+	lines = 0
 	for line in open(COMPTON, 'r'):
 		if re.search(value,line) != None:
 			# Clear the line
 			result = line.replace(value,"")
 			result = result.replace(" ","")
 			result = result.replace("=","")
-			result = result.replace(";\n","")
+			result = result.replace(";","")
 
 			# Return float value
 			# Many values like menu-opacity are float 
 			return float(result)
+		else:
+			if lines == conflen():
+				return 0
+		lines +=1
 
 def invertbool(bool):
 	# Some values such as no-dock-shadow need to be inverted
@@ -73,9 +90,6 @@ class GUI():
 		self.main_switch.connect("button-press-event", self.main_switch_event)
 		if os.path.isfile(AUTOSTART):
 			self.main_switch.set_active(True)
-
-		# Get info box
-		self.info_message = self.builder.get_object("info-message")
 
 		# Get main notebook
 		self.notebook = self.builder.get_object("notebook")		
@@ -109,7 +123,7 @@ class GUI():
 		# Get Box
 		self.fading_box = self.builder.get_object("fading-box")
 
-        # Main switch
+		# Main switch
 		self.fading = self.builder.get_object("fading")
 		self.fading.set_active(getbool("fading"))
 		self.fading.connect("button-press-event", self.fading_switch)
@@ -175,21 +189,31 @@ class GUI():
 		self.defaults_button = self.builder.get_object("defaults_button")
 		self.defaults_button.connect("clicked", self.defaults_settings)
 
+		# Get sensitive
+		self.view()
+
 		# Show it
-		if self.shadow.get_active() == False:
-			self.shadow_box.set_sensitive(False)
-		if self.fading.get_active() == False:
-			self.fading_box.set_sensitive(False)
-
-		if self.main_switch.get_active() == False:
-			self.info_message.show()
-			self.notebook.set_sensitive(False)
-		else:
-			self.info_message.hide()
-			self.notebook.set_sensitive(True)
-
 		if not donotshow: self.main.show_all()
 
+	def view(self):
+		# Setting up objects sensitive
+		# Shadow panel sensitive
+		if self.shadow.get_active() == False:
+			self.shadow_box.set_sensitive(False)
+		else:
+			self.shadow_box.set_sensitive(True)
+
+		# Fade panel sensitive
+		if self.fading.get_active() == False:
+			self.fading_box.set_sensitive(False)
+		else:
+			self.fading_box.set_sensitive(True)
+
+		# Notebook sensitive
+		if self.main_switch.get_active() == False:
+			self.notebook.set_sensitive(False)
+		else:
+			self.notebook.set_sensitive(True)
 
 	def defaults_settings(self, obj, opt = None):
 		# Restore compton.conf default value
@@ -202,11 +226,11 @@ class GUI():
 		# Fade settings
 		self.fading.set_active(True)
 		self.fading_openclose.set_active(True)
-		self.fade_delta.set_value(15)
+		self.fade_delta.set_value(12)
 		# Opacity settings
-		self.menu_opacity.set_value(0)
-		self.inactive_opacity.set_value(0)
-		self.frame_opacity.set_value(0)
+		self.menu_opacity.set_value(10)
+		self.inactive_opacity.set_value(10)
+		self.frame_opacity.set_value(10)
 		# Other settings
 		self.inactive_opacity_override.set_active(False)
 		self.shadow_ignore_shaped.set_active(False)
@@ -214,14 +238,12 @@ class GUI():
 		self.detect_rounded_corners.set_active(True)
 		self.blur_background_fixed.set_active(False)
 
+		# Get sensitive
+		self.view()
+
 	def main_switch_event(self, obj, opt = None):
 		# Switch Desktop effects on/off
 		self.notebook.set_sensitive(invertbool(self.main_switch.get_active()))
-
-		if self.main_switch.get_active():
-			self.info_message.show()
-		else:
-			self.info_message.hide()
 
 		if os.path.isfile(AUTOSTART):
 			# Delete .composite_enabled 
@@ -240,6 +262,14 @@ class GUI():
 		# Switch Shadow on/off
 		self.shadow_box.set_sensitive(invertbool(self.shadow.get_active()))
 
+	def thread_killcompton(self):
+		Thread(target=self.killcompton).start()
+	
+	def killcompton(self):
+		# Restart compton
+		os.system("killall compton")
+		os.system("compton")
+	
 	def save_apply(self, obj):
 		# Save & apply click event
 		# this should write the new configuration into compton.conf
@@ -249,16 +279,18 @@ class GUI():
 		['clear-shadow' , self.clear_shadow.get_active()],
 		['shadow-radius', self.radius.get_value()],
 		['fading', self.fading.get_active()], # fade settings
-		['no-fading-openclose', self.fading_openclose.get_active()],
-		['fade-delta', self.fade_delta.get_value()], # opacity settings
-		['menu-opacity', self.menu_opacity.get_value()],
-		['inactive-opacity', self.inactive_opacity.get_value()],# other settings
-		['frame-opacity', self.frame_opacity.get_value()],
-		['inactive-opacity-override', self.inactive_opacity_override.get_active()],
+		['no-fading-openclose', invertbool(self.fading_openclose.get_active())],
+		['fade-delta', self.fade_delta.get_value()], 
+		['menu-opacity', self.menu_opacity.get_value()/10], # opacity settings
+		['inactive-opacity', (self.inactive_opacity.get_value()/10.0)],
+		['frame-opacity', (self.frame_opacity.get_value()/10.0)], 
+		['inactive-opacity-override', self.inactive_opacity_override.get_active()], # other settings
 		['shadow-ignore-shaped', self.shadow_ignore_shaped.get_active()],
 		['mark-wmwin-focused', self.mark_wmwin_focused.get_active()],
 		['blur-background-fixed', self.blur_background_fixed.get_active()],
 		['detect-rounded-corners', self.detect_rounded_corners.get_active()]]
+
+		#print settings2file[7][1]/10
 
 		# Open and read old configuration file
 		old_config_file = open(COMPTON,'r')
@@ -273,7 +305,7 @@ class GUI():
 				if isinstance(settings2file[i][1],bool):
 					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %r;" % settings2file[i][1], old_config))
 				elif isinstance(settings2file[i][1],float):
-					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %d;" % settings2file[i][1], old_config))
+					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %f;" % settings2file[i][1], old_config))
 			else: 
 				old_config = old_config + "\n" + settings2file[i][0] + " = " + str(settings2file[i][1]) + ";"
 			
@@ -293,12 +325,19 @@ class GUI():
 		new_config_file.close()
 
 		# Restart compton
-		#os.system("killall compton")
-		#os.system("compton")
+		#self.thread_killcompton() #TO BE FIXED
+		self.main.destroy()
 
 		# close Paranoid
 		Gtk.main_quit()
 
 if __name__ == "__main__":
+
+	if not os.path.isfile(COMPTON):
+		
+		compton_file = open(COMPTON,'w+')
+		compton_file.write("# Compton.conf created by Paranoid\n")
+		compton_file.close()
+
 	g = GUI()
 	Gtk.main()

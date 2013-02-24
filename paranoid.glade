@@ -131,24 +131,6 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="info-message">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Desktop effects are disabled! Enable it by switching "Desktop effects" to on!</property>
-                <attributes>
-                  <attribute name="style" value="oblique"/>
-                  <attribute name="weight" value="medium"/>
-                  <attribute name="foreground" value="#000000000000"/>
-                  <attribute name="background" value="#ffffffffcccc"/>
-                </attributes>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkAlignment" id="alignment3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -941,7 +923,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>
