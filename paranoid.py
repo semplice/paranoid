@@ -28,6 +28,13 @@ GUIFILE = "./paranoid.glade"
 COMPTON = os.getenv('HOME') + "/.config/compton.conf"
 AUTOSTART = os.getenv('HOME') + "/.config/.composite_enabled"
 
+class RestartCompton(Thread):
+	def run(self):
+		
+		os.system("pkill compton")
+		os.system("compton -b")
+
+
 def getbool(value):
 	# Function to find and return boolean variables from compton.conf
 	lines = 0
@@ -251,7 +258,7 @@ class GUI():
 		else:
 			# Touch .composite_enabled
 			enabled_file = open(AUTOSTART,'w+')
-			enabled_file.write("# Paranoid composite enabled/disabled\n# delete this file for disable composite manager\n")
+			enabled_file.write("# Paranoid composite enabled\n# delete this file to disable composite manager\n")
 			enabled_file.close()
 
 	def fading_switch(self, obj, opt = None):
@@ -263,12 +270,8 @@ class GUI():
 		self.shadow_box.set_sensitive(invertbool(self.shadow.get_active()))
 
 	def thread_killcompton(self):
-		Thread(target=self.killcompton).start()
-	
-	def killcompton(self):
-		# Restart compton
-		os.system("killall compton")
-		os.system("compton")
+		thrd = RestartCompton()
+		thrd.start()
 	
 	def save_apply(self, obj):
 		# Save & apply click event
@@ -325,7 +328,7 @@ class GUI():
 		new_config_file.close()
 
 		# Restart compton
-		#self.thread_killcompton() #TO BE FIXED
+		self.thread_killcompton()
 		self.main.destroy()
 
 		# close Paranoid
