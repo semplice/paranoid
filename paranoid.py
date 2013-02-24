@@ -20,7 +20,7 @@
 
 from gi.repository import Gtk
 import gobject
-#import os
+import os
 import re
 import string
 
@@ -28,14 +28,11 @@ GUIFILE = "./paranoid.glade"
 COMPTON = "compton.conf"
 AUTOSTART = "~/.config/openbox/autostart"
 
-def getcomposite:
-
-
 def getbool(value):
 	# Function to find and return boolean variables from compton.conf
 	for line in open(COMPTON, 'r'):
 		if re.search(value,line) != None:
-			if re.search("true",line) != None:
+			if re.search(value,line) != None:
 				return True
 			else:
 				return False
@@ -74,6 +71,9 @@ class GUI():
 		# Get main switch
 		self.main_switch = self.builder.get_object("de-effects")	
 		self.main_switch.connect("button-press-event", self.main_switch_event)
+
+		# Get info box
+		self.info_message = self.builder.get_object("info-message")
 
 		# Get main notebook
 		self.notebook = self.builder.get_object("notebook")		
@@ -178,6 +178,14 @@ class GUI():
 			self.shadow_box.set_sensitive(False)
 		if self.fading.get_active() == False:
 			self.fading_box.set_sensitive(False)
+
+		if self.main_switch.get_active() == False:
+			self.info_message.show()
+			self.notebook.set_sensitive(False)
+		else:
+			self.info_message.hide()
+			self.notebook.set_sensitive(True)
+
 		if not donotshow: self.main.show_all()
 
 
@@ -188,9 +196,16 @@ class GUI():
 		# Switch Desktop effects on/off
 		self.notebook.set_sensitive(invertbool(self.main_switch.get_active()))
 
+		if self.main_switch.get_active():
+			self.info_message.show()
+		else:
+			self.info_message.hide()
+
+
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
 		self.fading_box.set_sensitive(invertbool(self.fading.get_active()))
+		
 
 	def shadow_switch(self, obj, opt = None):
 		# Switch Shadow on/off
@@ -199,6 +214,23 @@ class GUI():
 	def save_apply(self, obj):
 		# Save & apply click event
 		# this should write the new configuration into compton.conf
+		# Insert value into dictionary
+		settings2file = [['shadow',self.shadow.get_active()], # shadow settings
+		['no-dock-shadow' , invertbool(self.panel_shadow.get_active())],
+		['clear-shadow' , self.clear_shadow.get_active()],
+		['shadow-radius', self.radius.get_value()],
+		['fading', self.fading.get_active()], # fade settings
+		['no-fading-openclose', self.fading_openclose.get_active()],
+		['fade-delta', self.fade_delta.get_value()], # opacity settings
+		['menu-opacity', self.menu_opacity.get_value()],
+		['inactive-opacity', self.inactive_opacity.get_value()],# other settings
+		['frame-opacity', self.frame_opacity.get_value()],
+		['inactive-opacity-override', self.inactive_opacity_override.get_active()],
+		['shadow-ignore-shaped', self.shadow_ignore_shaped.get_active()],
+		['mark-wmwin-focused', self.mark_wmwin_focused.get_active()],
+		['blur-background-fixed', self.blur_background_fixed.get_active()],
+		['detect-rounded-corners', self.detect_rounded_corners.get_active()]]
+
 		# Open and read old configuration file
 		old_config_file = open(COMPTON,'r')
 		old_config = old_config_file.read()
@@ -206,28 +238,16 @@ class GUI():
 
 		# Replace old values with new inputs
 		# Shadow settings
-		old_config = (re.sub("shadow =(.*);", "shadow = %r;" % self.shadow.get_active(), old_config))
-		old_config = (re.sub("no-dock-shadow =(.*);", "no-dock-shadow = %r;" % invertbool(self.panel_shadow.get_active()), old_config))
-		old_config = (re.sub("clear-shadow =(.*);", "clear-shadow = %r;" % self.clear_shadow.get_active(), old_config))
-		old_config = (re.sub("shadow-radius =(.*);", "shadow-radius = %d;" % self.radius.get_value(), old_config))
-		
-		# Fading settings
-		old_config = (re.sub("fading =(.*);", "fading = %r;" % self.fading.get_active(), old_config))
-		old_config = (re.sub("no-fading-openclose =(.*);", "no-fading-openclose = %r;" % invertbool(self.fading_openclose.get_active()), old_config))
-		old_config = (re.sub("fade-delta =(.*);", "fade-delta = %f;" % (self.fade_delta.get_value()), old_config))
-
-		# Opacity settings
-		old_config = (re.sub("menu-opacity =(.*);", "menu-opacity = %f;" % (self.menu_opacity.get_value()/10), old_config))
-		old_config = (re.sub("inactive-opacity =(.*);", "inactive-opacity = %f;" % (self.inactive_opacity.get_value()/10 ),old_config))
-		old_config = (re.sub("frame-opacity =(.*);", "frame-opacity = %f;" % (self.frame_opacity.get_value()/10 ),old_config))
-
-		# Others settings
-		old_config = (re.sub("inactive-opacity-override =(.*);", "inactive-opacity-override = %r;" % self.inactive_opacity_override.get_active(), old_config))
-		old_config = (re.sub("shadow-ignore-shaped =(.*);", "shadow-ignore-shaped = %r;" % self.shadow_ignore_shaped.get_active(), old_config))
-		old_config = (re.sub("mark-wmwin-focused =(.*);", "mark-wmwin-focused = %r;" % self.mark_wmwin_focused.get_active(), old_config))
-		old_config = (re.sub("blur-background-fixed =(.*);", "blur-background-fixed = %r;" % self.blur_background_fixed.get_active(), old_config))
-		old_config = (re.sub("detect-rounded-corners =(.*);", "detect-rounded-corners = %r;" % self.detect_rounded_corners.get_active(), old_config))
-
+		for i in range(0,settings2file.__len__()): #14
+			string_start = "\n"+settings2file[i][0]+r" =(.*);"
+			if re.search(string_start,old_config):
+				if isinstance(settings2file[i][1],bool):
+					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %r;" % settings2file[i][1], old_config))
+				elif isinstance(settings2file[i][1],float):
+					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %d;" % settings2file[i][1], old_config))
+			else: 
+				old_config = old_config + "\n" + settings2file[i][0] + " = " + str(settings2file[i][1]) + ";"
+			
 		# Fix uppercase
 		old_config = (re.sub("False","false",old_config))
 		old_config = (re.sub("True","true",old_config))
@@ -242,7 +262,12 @@ class GUI():
 		new_config_file = open(COMPTON,'w')
 		new_config_file.write(old_config)
 		new_config_file.close()
-		
+
+		# Restart compton
+		#os.system("killall compton")
+		#os.system("compton")
+
+		# close Paranoid
 		Gtk.main_quit()
 
 if __name__ == "__main__":
