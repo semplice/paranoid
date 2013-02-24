@@ -26,7 +26,7 @@ import string
 
 GUIFILE = "./paranoid.glade"
 COMPTON = "compton.conf"
-AUTOSTART = "~/.config/openbox/autostart"
+AUTOSTART = os.getenv('HOME') + "/.config/.composite_enabled"
 
 def getbool(value):
 	# Function to find and return boolean variables from compton.conf
@@ -71,6 +71,8 @@ class GUI():
 		# Get main switch
 		self.main_switch = self.builder.get_object("de-effects")	
 		self.main_switch.connect("button-press-event", self.main_switch_event)
+		if os.path.isfile(AUTOSTART):
+			self.main_switch.set_active(True)
 
 		# Get info box
 		self.info_message = self.builder.get_object("info-message")
@@ -190,7 +192,27 @@ class GUI():
 
 
 	def defaults_settings(self, obj, opt = None):
-		""" Restore default values """
+		# Restore compton.conf default value
+		# Shadow settings
+		self.main_switch.set_active(True)
+		self.shadow.set_active(True)
+		self.panel_shadow.set_active(False)
+		self.clear_shadow.set_active(True)
+		self.radius.set_value(12)
+		# Fade settings
+		self.fading.set_active(True)
+		self.fading_openclose.set_active(True)
+		self.fade_delta.set_value(15)
+		# Opacity settings
+		self.menu_opacity.set_value(0)
+		self.inactive_opacity.set_value(0)
+		self.frame_opacity.set_value(0)
+		# Other settings
+		self.inactive_opacity_override.set_active(False)
+		self.shadow_ignore_shaped.set_active(False)
+		self.mark_wmwin_focused.set_active(True)
+		self.detect_rounded_corners.set_active(True)
+		self.blur_background_fixed.set_active(False)
 
 	def main_switch_event(self, obj, opt = None):
 		# Switch Desktop effects on/off
@@ -201,11 +223,18 @@ class GUI():
 		else:
 			self.info_message.hide()
 
+		if os.path.isfile(AUTOSTART):
+			# Delete .composite_enabled 
+			os.remove(AUTOSTART)
+		else:
+			# Touch .composite_enabled
+			enabled_file = open(AUTOSTART,'w+')
+			enabled_file.write("# Paranoid composite enabled/disabled\n# delete this file for disable composite manager\n")
+			enabled_file.close()
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
-		self.fading_box.set_sensitive(invertbool(self.fading.get_active()))
-		
+		self.fading_box.set_sensitive(invertbool(self.fading.get_active()))	
 
 	def shadow_switch(self, obj, opt = None):
 		# Switch Shadow on/off
@@ -259,7 +288,7 @@ class GUI():
 		#print old_config
 
 		# Write new configuration file
-		new_config_file = open(COMPTON,'w')
+		new_config_file = open(COMPTON,'w+')
 		new_config_file.write(old_config)
 		new_config_file.close()
 
