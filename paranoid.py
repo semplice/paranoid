@@ -27,6 +27,7 @@ import string
 GUIFILE = "./paranoid.glade"
 COMPTON = os.getenv('HOME') + "/.config/compton.conf"
 AUTOSTART = os.getenv('HOME') + "/.config/.composite_enabled"
+newconf = False
 
 class RestartCompton(Thread):
 	def run(self):
@@ -194,16 +195,24 @@ class GUI():
 
 		# Defaults button
 		self.defaults_button = self.builder.get_object("defaults_button")
-		self.defaults_button.connect("clicked", self.defaults_settings)
+		self.defaults_button.connect("clicked", self.defaults_button_execute)
 
 		# Get sensitive
-		self.view()
+		if newconf == False:
+			self.view()
+		else:
+			self.defaults_settings()
 
 		# Show it
 		if not donotshow: self.main.show_all()
 
+	def defaults_button_execute(self, obj, opt = None):
+		self.defaults_settings()
+
 	def view(self):
 		# Setting up objects sensitive
+		# Generate default settings if compton.conf doesn't exist
+						
 		# Shadow panel sensitive
 		if self.shadow.get_active() == False:
 			self.shadow_box.set_sensitive(False)
@@ -222,7 +231,7 @@ class GUI():
 		else:
 			self.notebook.set_sensitive(True)
 
-	def defaults_settings(self, obj, opt = None):
+	def defaults_settings(self):
 		# Restore compton.conf default value
 		# Shadow settings
 		self.main_switch.set_active(True)
@@ -339,8 +348,9 @@ if __name__ == "__main__":
 	if not os.path.isfile(COMPTON):
 		
 		compton_file = open(COMPTON,'w+')
-		compton_file.write("# Compton.conf created by Paranoid\n")
+		compton_file.write("# compton.conf created by paranoid\n")
 		compton_file.close()
+		newconf = True
 
 	g = GUI()
 	Gtk.main()
