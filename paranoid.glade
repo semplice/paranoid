@@ -21,7 +21,7 @@
     <property name="can_focus">False</property>
     <property name="border_width">2</property>
     <property name="title" translatable="yes">Desktop effects preferences</property>
-    <property name="icon_name">preferences-desktop-theme</property>
+    <property name="icon_name">preferences-system-windows</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
