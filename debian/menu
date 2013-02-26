@@ -1,0 +1,2 @@
+?package(paranoid):needs="X11|text|vc|wm" section="System/Administration"\
+  title="Configure Desktop Effects" command="/usr/bin/paranoid"
