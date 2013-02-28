@@ -1,3 +1,9 @@
+paranoid (1.0.1-1) unstable; urgency=low
+
+  * Ensure we get the right glade file.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Thu, 28 Feb 2013 19:06:54 +0100
+
 paranoid (1.0.0-1) unstable; urgency=low
 
   * Initial release
