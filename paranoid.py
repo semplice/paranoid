@@ -24,7 +24,7 @@ import os
 import re
 import string
 
-GUIFILE = "./paranoid.glade"
+GUIFILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), "paranoid.glade")
 COMPTON = os.getenv('HOME') + "/.config/compton.conf"
 AUTOSTART = os.getenv('HOME') + "/.config/.composite_enabled"
 newconf = False
