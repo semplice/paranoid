@@ -10,7 +10,7 @@ Vcs-Git: git://github.com/semplice/paranoid.git
 Vcs-Browser: https://github.com/semplice/paranoid
 
 Package: paranoid
-Architecture: any
+Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python-t9n, python-gi,
  gir1.2-gtk-3.0, compton
 Description: GTK+3 configuration tool for compton.
