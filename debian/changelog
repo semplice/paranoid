@@ -1,3 +1,10 @@
+paranoid (1.0.2-1) unstable; urgency=low
+
+  * Restart compton only if we are sure that the effects are enabled.
+  * debian/control: architecture: any -> all
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Fri, 01 Mar 2013 18:48:30 +0100
+
 paranoid (1.0.1-1) unstable; urgency=low
 
   * Ensure we get the right glade file.
