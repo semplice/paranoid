@@ -30,10 +30,19 @@ AUTOSTART = os.getenv('HOME') + "/.config/.composite_enabled"
 newconf = False
 
 class RestartCompton(Thread):
+	def __init__(self, parent):
+		
+		self.parent = parent
+		
+		Thread.__init__(self)
+		
 	def run(self):
 		
 		os.system("pkill compton")
-		os.system("compton -b")
+		
+		# Start only if we are sure the effects are enabled.
+		if self.parent.main_switch.get_active():
+			os.system("compton -b")
 
 
 def getbool(value):
@@ -279,7 +288,7 @@ class GUI():
 		self.shadow_box.set_sensitive(invertbool(self.shadow.get_active()))
 
 	def thread_killcompton(self):
-		thrd = RestartCompton()
+		thrd = RestartCompton(self)
 		thrd.start()
 	
 	def save_apply(self, obj):
