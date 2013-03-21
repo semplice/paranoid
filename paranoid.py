@@ -211,6 +211,7 @@ class GUI():
 			self.view()
 		else:
 			self.defaults_settings()
+			self.main_switch.set_active(False) # If it is new, the user still hasn't chosen to enable compositing.
 
 		# Show it
 		if not donotshow: self.main.show_all()
