@@ -20,7 +20,7 @@
 from distutils.core import setup
 
 setup(name='paranoid',
-      version='1.0.2',
+      version='1.0.3',
       description='GTK+3 configuration tool for compton.',
       author='Giuseppe Corti and the Semplice Team',
       author_email='gsc.rul3z@gmail.com',
