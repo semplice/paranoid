@@ -1,3 +1,9 @@
+paranoid (1.0.3-1) unstable; urgency=low
+
+  * Ensure we keep the main_switch to False on new configuration.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Thu, 21 Mar 2013 16:36:13 +0100
+
 paranoid (1.0.2-2) unstable; urgency=low
 
   * debian/rules: ensure we invoke dh_python2.
