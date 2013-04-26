@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[paranoid.master]
+file_filter = lang/paranoid/<lang>.po
+source_file = lang/paranoid/paranoid.pot
+source_lang = en
+type = PO

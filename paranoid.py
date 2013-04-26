@@ -212,6 +212,7 @@ class GUI():
 		else:
 			self.defaults_settings()
 			self.main_switch.set_active(False) # If it is new, the user still hasn't chosen to enable compositing.
+			self.notebook.set_sensitive(False)
 
 		# Show it
 		if not donotshow: self.main.show_all()
@@ -247,11 +248,11 @@ class GUI():
 		self.main_switch.set_active(True)
 		self.shadow.set_active(True)
 		self.panel_shadow.set_active(False)
-		self.clear_shadow.set_active(True)
+		self.clear_shadow.set_active(False)
 		self.radius.set_value(12)
 		# Fade settings
-		self.fading.set_active(True)
-		self.fading_openclose.set_active(True)
+		self.fading.set_active(False)
+		self.fading_openclose.set_active(False)
 		self.fade_delta.set_value(12)
 		# Opacity settings
 		self.menu_opacity.set_value(10)
