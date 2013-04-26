@@ -1,3 +1,13 @@
+paranoid (1.0.4-1) unstable; urgency=low
+
+  [ Giuseppe Corti ]
+  * new default config, bugfix
+
+  [ Eugenio Paolantonio (g7) ]
+  * No translations for atom; but added support translation scripts.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Fri, 26 Apr 2013 15:22:59 +0200
+
 paranoid (1.0.3-1) unstable; urgency=low
 
   * Ensure we keep the main_switch to False on new configuration.
