@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GObject
 from threading import Thread
 import gobject
 import os
@@ -175,6 +175,9 @@ class GUI():
 		#
 		# Other
 		#
+		# Backend
+		self.backend_combo = self.builder.get_object("backend-combobox")
+
 		# Inactive opacity override 
 		self.inactive_opacity_override = self.builder.get_object("inactive-opacity-override")
 		self.inactive_opacity_override.set_active(getbool("inactive-opacity-override"))
@@ -206,6 +209,9 @@ class GUI():
 		self.defaults_button = self.builder.get_object("defaults_button")
 		self.defaults_button.connect("clicked", self.defaults_button_execute)
 
+		# Setup GUI
+		self.setup()
+
 		# Get sensitive
 		if newconf == False:
 			self.view()
@@ -216,6 +222,16 @@ class GUI():
 
 		# Show it
 		if not donotshow: self.main.show_all()
+
+	def setup(self):
+		""" Initialize GUI """
+		list_backend = Gtk.ListStore(GObject.TYPE_STRING)
+		list_backend.append(("OpenGL",))
+		list_backend.append(("XRender",))
+		self.backend_combo.set_model(list_backend)
+		cell = Gtk.CellRendererText()
+		self.backend_combo.pack_start(cell, True)
+		self.backend_combo.add_attribute(cell, "text", 0)
 
 	def defaults_button_execute(self, obj, opt = None):
 		self.defaults_settings()

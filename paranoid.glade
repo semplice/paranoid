@@ -34,11 +34,9 @@
             <child>
               <object class="GtkButton" id="defaults_button">
                 <property name="label">Defaults</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="image">image1</property>
               </object>
               <packing>
@@ -50,11 +48,9 @@
             <child>
               <object class="GtkButton" id="save">
                 <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -112,10 +108,8 @@
                 </child>
                 <child>
                   <object class="GtkSwitch" id="de-effects">
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="use_action_appearance">False</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -222,13 +216,11 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="clear_shadow">
-                                <property name="use_action_appearance">False</property>
                                 <property name="width_request">0</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
                                 <property name="margin_right">318</property>
-                                <property name="use_action_appearance">False</property>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -264,14 +256,12 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="panel_shadow">
-                                <property name="use_action_appearance">False</property>
                                 <property name="width_request">0</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
                                 <property name="margin_right">318</property>
                                 <property name="margin_bottom">9</property>
-                                <property name="use_action_appearance">False</property>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -361,10 +351,8 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="shadow">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="use_action_appearance">False</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -421,11 +409,9 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="fading-openclose">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
-                                <property name="use_action_appearance">False</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -509,10 +495,8 @@
                         </child>
                         <child>
                           <object class="GtkSwitch" id="fading">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="use_action_appearance">False</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -686,95 +670,11 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkFixed" id="fixed12">
-                            <property name="height_request">25</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">0</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkFixed" id="fixed13">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">6</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkFixed" id="fixed14">
-                            <property name="height_request">72</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">6</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkFixed" id="fixed17">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">0</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkSwitch" id="inactive-opacity-override">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="margin_left">20</property>
-                            <property name="margin_right">46</property>
-                            <property name="use_action_appearance">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSwitch" id="shadow-ignore-shaped">
-                            <property name="use_action_appearance">False</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="margin_left">20</property>
-                            <property name="margin_right">46</property>
-                            <property name="use_action_appearance">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">2</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSwitch" id="mark-wmwin-focused">
-                            <property name="use_action_appearance">False</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="margin_left">20</property>
-                            <property name="margin_right">46</property>
-                            <property name="use_action_appearance">False</property>
+                            <property name="margin_right">342</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -784,17 +684,43 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSwitch" id="blur-background-fixed">
-                            <property name="use_action_appearance">False</property>
+                          <object class="GtkSwitch" id="shadow-ignore-shaped">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="margin_left">20</property>
-                            <property name="margin_right">46</property>
-                            <property name="use_action_appearance">False</property>
+                            <property name="margin_right">342</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">4</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch" id="mark-wmwin-focused">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="margin_left">20</property>
+                            <property name="margin_right">342</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">5</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch" id="blur-background-fixed">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="margin_left">20</property>
+                            <property name="margin_right">342</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">7</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -810,7 +736,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">1</property>
+                            <property name="top_attach">3</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -826,7 +752,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">2</property>
+                            <property name="top_attach">4</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -842,7 +768,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">3</property>
+                            <property name="top_attach">5</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -858,7 +784,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">4</property>
+                            <property name="top_attach">6</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -874,23 +800,125 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">5</property>
+                            <property name="top_attach">7</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkSwitch" id="detect-rounded-corners">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="margin_left">20</property>
-                            <property name="margin_right">46</property>
-                            <property name="use_action_appearance">False</property>
+                            <property name="margin_right">342</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
-                            <property name="top_attach">4</property>
+                            <property name="top_attach">6</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="lb_backend">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
+                            <property name="margin_left">9</property>
+                            <property name="label" translatable="yes">Backend: </property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="backend-combobox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_right">295</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">1</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFixed" id="fixed7">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">8</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFixed" id="fixed12">
+                            <property name="height_request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">8</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFixed" id="fixed13">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">2</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFixed" id="fixed14">
+                            <property name="height_request">24</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">2</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFixed" id="fixed15">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">0</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFixed" id="fixed16">
+                            <property name="height_request">21</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">0</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
