@@ -44,6 +44,21 @@ class RestartCompton(Thread):
 		if self.parent.main_switch.get_active():
 			os.system("compton -b")
 
+def getbackend():
+	""" Return True if glx is set else it return False """
+	value = "backend"
+	lines = 0
+	for line in open(COMPTON, 'r'):
+		if re.search(value,line) != None:
+			if re.search(value + ' = "xrender";',line) != None:
+				return True
+			else:
+				return False
+		else:
+			if lines == conflen():
+				return False
+		lines += 1
+
 
 def getbool(value):
 	# Function to find and return boolean variables from compton.conf
@@ -210,7 +225,7 @@ class GUI():
 		self.defaults_button.connect("clicked", self.defaults_button_execute)
 
 		# Setup GUI
-		self.setup()
+		self.setup(newconf)
 
 		# Get sensitive
 		if newconf == False:
@@ -223,15 +238,26 @@ class GUI():
 		# Show it
 		if not donotshow: self.main.show_all()
 
-	def setup(self):
+	def setup(self, newconf):
 		""" Initialize GUI """
+		# Set backend combobox
 		list_backend = Gtk.ListStore(GObject.TYPE_STRING)
-		list_backend.append(("OpenGL",))
+		list_backend.append(("GLX",))
 		list_backend.append(("XRender",))
 		self.backend_combo.set_model(list_backend)
 		cell = Gtk.CellRendererText()
 		self.backend_combo.pack_start(cell, True)
 		self.backend_combo.add_attribute(cell, "text", 0)
+
+		# set backend value
+		if newconf == False:
+			if getbackend():
+				self.backend_combo.set_active(1)
+			else:
+				self.backend_combo.set_active(0)
+		else:
+			self.backend_combo.set_active(0)
+
 
 	def defaults_button_execute(self, obj, opt = None):
 		self.defaults_settings()
@@ -309,9 +335,17 @@ class GUI():
 		thrd = RestartCompton(self)
 		thrd.start()
 	
+	def combo2backend(self, value):
+		""" Combobox value to backend compton config file value """
+		if value == 0:
+			return '"glx"'
+		else:
+			return '"xrender"'
+	
 	def save_apply(self, obj):
 		# Save & apply click event
 		# this should write the new configuration into compton.conf
+
 		# Insert value into dictionary
 		settings2file = [['shadow',self.shadow.get_active()], # shadow settings
 		['no-dock-shadow' , invertbool(self.panel_shadow.get_active())],
@@ -324,6 +358,7 @@ class GUI():
 		['inactive-opacity', (self.inactive_opacity.get_value()/10.0)],
 		['frame-opacity', (self.frame_opacity.get_value()/10.0)], 
 		['inactive-opacity-override', self.inactive_opacity_override.get_active()], # other settings
+		['backend', self.combo2backend(self.backend_combo.get_active())], 
 		['shadow-ignore-shaped', self.shadow_ignore_shaped.get_active()],
 		['mark-wmwin-focused', self.mark_wmwin_focused.get_active()],
 		['blur-background-fixed', self.blur_background_fixed.get_active()],

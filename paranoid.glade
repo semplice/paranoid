@@ -839,7 +839,7 @@
                           <object class="GtkComboBox" id="backend-combobox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_right">295</property>
+                            <property name="margin_right">341</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
