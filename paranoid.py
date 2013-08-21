@@ -376,10 +376,7 @@ class GUI():
 		for i in range(0,settings2file.__len__()): #14
 			string_start = "\n"+settings2file[i][0]+r" =(.*);"
 			if re.search(string_start,old_config):
-				if isinstance(settings2file[i][1],bool):
-					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %r;" % settings2file[i][1], old_config))
-				elif isinstance(settings2file[i][1],float):
-					old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %f;" % settings2file[i][1], old_config))
+				old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %s;" % settings2file[i][1], old_config))
 			else: 
 				old_config = old_config + "\n" + settings2file[i][0] + " = " + str(settings2file[i][1]) + ";"
 			
