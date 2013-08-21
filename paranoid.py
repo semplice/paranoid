@@ -44,68 +44,95 @@ class RestartCompton(Thread):
 		if self.parent.main_switch.get_active():
 			os.system("compton -b")
 
-def getbackend():
-	""" Return True if glx is set else it return False """
-	value = "backend"
-	lines = 0
-	for line in open(COMPTON, 'r'):
-		if re.search(value,line) != None:
-			if re.search(value + ' = "xrender";',line) != None:
-				return True
-			else:
-				return False
-		else:
-			if lines == conflen():
-				return False
-		lines += 1
+def isValue(item, value):
+	""" Returns True if item is value, False if not. """
 
+	if not item in defaults or defaults[item] != value:
+		return False
+	else:
+		return True
 
-def getbool(value):
-	# Function to find and return boolean variables from compton.conf
-	lines = 0
-	for line in open(COMPTON, 'r'):
-		if re.search(value,line) != None:
-			if re.search(value + " = true;",line) != None:
-				return True
-			else:
-				return False
-		else:
-			if lines == conflen():
-				return False
-		lines += 1
-		
-def conflen():
-	# Count compton.conf lines
-	lines = 0
-	for line in open(COMPTON, 'r'):
-		lines += 1
-	return lines-1
-				
-def getint(value):
-	# Function to find and return values from compton.conf
-	lines = 0
-	for line in open(COMPTON, 'r'):
-		if re.search(value,line) != None:
-			# Clear the line
-			result = line.replace(value,"")
-			result = result.replace(" ","")
-			result = result.replace("=","")
-			result = result.replace(";","")
+def getBool(value):
+	""" Returns the value if in defaults, False if not. """
 
-			# Return float value
-			# Many values like menu-opacity are float 
-			return float(result)
-		else:
-			if lines == conflen():
-				return 0
-		lines +=1
+	if value in defaults:
+		return defaults[value]
+	else:
+		return False
 
-def invertbool(bool):
-	# Some values such as no-dock-shadow need to be inverted
+def getInt(value):
+	""" Returns the value if in defaults, 0 if not. """
+	
+	if value in defaults:
+		return defaults[value]
+	else:
+		return 0
+
+def invertBool(bool):
+	""" Inverts bool. """
+
 	if bool == True:
 		return False
 	else:
 		return True
+
+def isInt(item):
+	"""Returns True if item is an integer, False if not."""
+	
+	if type(item) == int or item.strip("+-").isdigit():
+		return True
+	else:
+		return False
+
+def isBool(item):
+	""" Returns True if item is a boolean object, False if not. """
+	
+	if type(item) == bool or item.lower() in ("true","false"):
+		return True
+	else:
+		return False
+
+def isFloat(item):
+	""" Returns True if item is a float object, False if not. """
+
+	if type(item) == float or "." in item and isInt(item.replace(".","", 1)):
+		return True
+	else:
+		return False
+
+def returnValues():
+	""" Returns every value in the config value """
+	
+	dct = {}
+	if not os.path.exists(COMPTON): return dct
+	
+	with open(COMPTON, "r") as f:
+		for line in f.readlines():
+			line = line.replace(" ","").replace("\n","").replace("\r","").split("=")
+
+			if len(line) != 2:
+				# Unable to parse this line.
+				continue
+			
+			item, value = line
+			
+			# Remove ; and " from value
+			value = value.replace(";","").replace('"',"")
+			
+			# Convert value
+			if isBool(value):
+				value = bool(value.capitalize())
+			elif isFloat(value):
+				value = float(value)
+			elif isInt(value):
+				value = int(value)
+			
+			# Add to dct
+			dct[item] = value
+	
+	return dct
+
+defaults = returnValues()
 
 class GUI():
 	def __init__(self, donotshow=False):
@@ -133,21 +160,21 @@ class GUI():
 
 		# Main switch 
 		self.shadow = self.builder.get_object("shadow")
-		self.shadow.set_active(getbool("shadow"))
+		self.shadow.set_active(getBool("shadow"))
 		self.shadow.connect("button-press-event", self.shadow_switch)
 		
 		# Panel shadow bool
 		self.panel_shadow = self.builder.get_object("panel_shadow")
-		self.panel_shadow.set_active(invertbool(getbool("no-dock-shadow")))
+		self.panel_shadow.set_active(invertBool(getBool("no-dock-shadow")))
 
 		# Clear shadow bool
 		self.clear_shadow = self.builder.get_object("clear_shadow")
-		self.clear_shadow.set_active(getbool("clear-shadow"))
+		self.clear_shadow.set_active(getBool("clear-shadow"))
 
 		# Radius scale
 		self.radius = self.builder.get_object("radius")
 		self.radius.set_range(0, 25)
-		self.radius.set_value(getint("shadow-radius"))
+		self.radius.set_value(getInt("shadow-radius"))
 
 		#
 		# Fading
@@ -157,17 +184,17 @@ class GUI():
 
 		# Main switch
 		self.fading = self.builder.get_object("fading")
-		self.fading.set_active(getbool("fading"))
+		self.fading.set_active(getBool("fading"))
 		self.fading.connect("button-press-event", self.fading_switch)
 
 		# No fading openclose
 		self.fading_openclose = self.builder.get_object("fading-openclose")
-		self.fading_openclose.set_active(invertbool(getbool("no-fading-openclose")))
+		self.fading_openclose.set_active(invertBool(getBool("no-fading-openclose")))
 
 		# Fade delta scale
 		self.fade_delta = self.builder.get_object("fade-delta")
 		self.fade_delta.set_range(0, 30)
-		self.fade_delta.set_value(getint("fade-delta"))
+		self.fade_delta.set_value(getInt("fade-delta"))
 
 		#
 		# Opacity
@@ -175,17 +202,17 @@ class GUI():
 		# Menu opacity scale
 		self.menu_opacity = self.builder.get_object("menu-opacity")
 		self.menu_opacity.set_range(0, 10)
-		self.menu_opacity.set_value(getint("menu-opacity")*10)
+		self.menu_opacity.set_value(getInt("menu-opacity")*10)
 
 		# Inactive opacity scale
 		self.inactive_opacity = self.builder.get_object("inactive-opacity")
 		self.inactive_opacity.set_range(0, 10)
-		self.inactive_opacity.set_value(getint("inactive-opacity")*10)
+		self.inactive_opacity.set_value(getInt("inactive-opacity")*10)
 
 		# Frame opacity scale
 		self.frame_opacity = self.builder.get_object("frame-opacity")
 		self.frame_opacity.set_range(0, 10)
-		self.frame_opacity.set_value(getint("frame-opacity")*10)
+		self.frame_opacity.set_value(getInt("frame-opacity")*10)
 
 		#
 		# Other
@@ -195,23 +222,23 @@ class GUI():
 
 		# Inactive opacity override 
 		self.inactive_opacity_override = self.builder.get_object("inactive-opacity-override")
-		self.inactive_opacity_override.set_active(getbool("inactive-opacity-override"))
+		self.inactive_opacity_override.set_active(getBool("inactive-opacity-override"))
 
 		# Sahdow ignore shaped
 		self.shadow_ignore_shaped = self.builder.get_object("shadow-ignore-shaped")
-		self.shadow_ignore_shaped.set_active(getbool("shadow-ignore-shaped"))
+		self.shadow_ignore_shaped.set_active(getBool("shadow-ignore-shaped"))
 
 		# Mark wmwin focused
 		self.mark_wmwin_focused = self.builder.get_object("mark-wmwin-focused")
-		self.mark_wmwin_focused.set_active(getbool("mark-wmwin-focused"))
+		self.mark_wmwin_focused.set_active(getBool("mark-wmwin-focused"))
 
 		# Detect rounded corners
 		self.detect_rounded_corners = self.builder.get_object("detect-rounded-corners")
-		self.detect_rounded_corners.set_active(getbool("detect-rounded-corners"))
+		self.detect_rounded_corners.set_active(getBool("detect-rounded-corners"))
 
 		# Blur background fixed
 		self.blur_background_fixed = self.builder.get_object("blur-background-fixed")
-		self.blur_background_fixed.set_active(getbool("blur-background-fixed"))
+		self.blur_background_fixed.set_active(getBool("blur-background-fixed"))
 
 		# Connect destroy
 		self.main.connect("destroy", lambda x: Gtk.main_quit())
@@ -251,7 +278,7 @@ class GUI():
 
 		# set backend value
 		if newconf == False:
-			if getbackend():
+			if not isValue("backend","glx"):
 				self.backend_combo.set_active(1)
 			else:
 				self.backend_combo.set_active(0)
@@ -312,24 +339,23 @@ class GUI():
 
 	def main_switch_event(self, obj, opt = None):
 		# Switch Desktop effects on/off
-		self.notebook.set_sensitive(invertbool(self.main_switch.get_active()))
+		self.notebook.set_sensitive(invertBool(self.main_switch.get_active()))
 
 		if os.path.isfile(AUTOSTART):
 			# Delete .composite_enabled 
 			os.remove(AUTOSTART)
 		else:
 			# Touch .composite_enabled
-			enabled_file = open(AUTOSTART,'w+')
-			enabled_file.write("# Paranoid composite enabled\n# delete this file to disable composite manager\n")
-			enabled_file.close()
+			with open(AUTOSTART, "w+") as f:
+				f.write("# Paranoid composite enabled\n# delete this file to disable composite manager\n")
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
-		self.fading_box.set_sensitive(invertbool(self.fading.get_active()))	
+		self.fading_box.set_sensitive(invertBool(self.fading.get_active()))	
 
 	def shadow_switch(self, obj, opt = None):
 		# Switch Shadow on/off
-		self.shadow_box.set_sensitive(invertbool(self.shadow.get_active()))
+		self.shadow_box.set_sensitive(invertBool(self.shadow.get_active()))
 
 	def thread_killcompton(self):
 		thrd = RestartCompton(self)
@@ -347,38 +373,41 @@ class GUI():
 		# this should write the new configuration into compton.conf
 
 		# Insert value into dictionary
-		settings2file = [['shadow',self.shadow.get_active()], # shadow settings
-		['no-dock-shadow' , invertbool(self.panel_shadow.get_active())],
-		['clear-shadow' , self.clear_shadow.get_active()],
-		['shadow-radius', self.radius.get_value()],
-		['fading', self.fading.get_active()], # fade settings
-		['no-fading-openclose', invertbool(self.fading_openclose.get_active())],
-		['fade-delta', self.fade_delta.get_value()], 
-		['menu-opacity', self.menu_opacity.get_value()/10], # opacity settings
-		['inactive-opacity', (self.inactive_opacity.get_value()/10.0)],
-		['frame-opacity', (self.frame_opacity.get_value()/10.0)], 
-		['inactive-opacity-override', self.inactive_opacity_override.get_active()], # other settings
-		['backend', self.combo2backend(self.backend_combo.get_active())], 
-		['shadow-ignore-shaped', self.shadow_ignore_shaped.get_active()],
-		['mark-wmwin-focused', self.mark_wmwin_focused.get_active()],
-		['blur-background-fixed', self.blur_background_fixed.get_active()],
-		['detect-rounded-corners', self.detect_rounded_corners.get_active()]]
-
+		settings2file = {
+			'shadow':self.shadow.get_active(), # shadow settings
+			'no-dock-shadow' : invertBool(self.panel_shadow.get_active()),
+			'clear-shadow' : self.clear_shadow.get_active(),
+			'shadow-radius': self.radius.get_value(),
+			'fading': self.fading.get_active(), # fade settings
+			'no-fading-openclose': invertBool(self.fading_openclose.get_active()),
+			'fade-delta': self.fade_delta.get_value(), 
+			'menu-opacity': self.menu_opacity.get_value()/10, # opacity settings
+			'inactive-opacity': (self.inactive_opacity.get_value()/10.0),
+			'frame-opacity': (self.frame_opacity.get_value()/10.0), 
+			'inactive-opacity-override': self.inactive_opacity_override.get_active(), # other settings
+			'backend': self.combo2backend(self.backend_combo.get_active()), 
+			'shadow-ignore-shaped': self.shadow_ignore_shaped.get_active(),
+			'mark-wmwin-focused': self.mark_wmwin_focused.get_active(),
+			'blur-background-fixed': self.blur_background_fixed.get_active(),
+			'detect-rounded-corners': self.detect_rounded_corners.get_active()
+		}
+		
 		#print settings2file[7][1]/10
 
 		# Open and read old configuration file
-		old_config_file = open(COMPTON,'r')
-		old_config = old_config_file.read()
-		old_config_file.close()
+		with open(COMPTON, "r") as f:
+			old_config = f.read()
+			if not old_config[-1] == "\n":
+				old_config = old_config + "\n" # \n is a workaround for old configs.
 
 		# Replace old values with new inputs
 		# Shadow settings
-		for i in range(0,settings2file.__len__()): #14
-			string_start = "\n"+settings2file[i][0]+r" =(.*);"
-			if re.search(string_start,old_config):
-				old_config = (re.sub(string_start, "\n" + settings2file[i][0]+" = %s;" % settings2file[i][1], old_config))
-			else: 
-				old_config = old_config + "\n" + settings2file[i][0] + " = " + str(settings2file[i][1]) + ";"
+		for item, value in settings2file.items():
+			string_start = r"^%s =(.*);" % item
+			if re.search(string_start,old_config,re.MULTILINE):
+				old_config = (re.sub(string_start, r"^%(item)s = %(value)s;" % {"item":item, "value":str(value)}, old_config))
+			else:
+				old_config = old_config + "%(item)s = %(value)s;\n" % {"item":item, "value":str(value)}
 			
 		# Fix uppercase
 		old_config = (re.sub("False","false",old_config))
@@ -391,9 +420,8 @@ class GUI():
 		#print old_config
 
 		# Write new configuration file
-		new_config_file = open(COMPTON,'w+')
-		new_config_file.write(old_config)
-		new_config_file.close()
+		with open(COMPTON, "w+") as f:
+			f.write(old_config)
 
 		# Restart compton
 		self.thread_killcompton()
@@ -404,11 +432,13 @@ class GUI():
 
 if __name__ == "__main__":
 
+	import signal
+	signal.signal(signal.SIGINT, signal.SIG_DFL)
+
 	if not os.path.isfile(COMPTON):
 		
-		compton_file = open(COMPTON,'w+')
-		compton_file.write("# compton.conf created by paranoid\n")
-		compton_file.close()
+		with open(COMPTON, "w+") as f:
+			f.write("# compton.conf generated by paranoid\n")
 		newconf = True
 
 	g = GUI()
