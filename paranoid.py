@@ -87,10 +87,21 @@ def isInt(item):
 def isBool(item):
 	""" Returns True if item is a boolean object, False if not. """
 	
-	if type(item) == bool or item.lower() in ("true","false"):
+	if type(item) == bool or item.lower() in ("true","false","0","1"):
 		return True
 	else:
 		return False
+
+def boolFromString(item):
+	""" Returns a boolean object from a string which resembles one. """
+	
+	if isBool(item):
+		if item.lower() in ("true", "1"):
+			return True
+		elif item.lower() in ("false", "0"):
+			return False
+	
+	return None
 
 def isFloat(item):
 	""" Returns True if item is a float object, False if not. """
@@ -115,13 +126,13 @@ def returnValues():
 				continue
 			
 			item, value = line
-			
+						
 			# Remove ; and " from value
 			value = value.replace(";","").replace('"',"")
 			
 			# Convert value
-			if isBool(value):
-				value = bool(value.capitalize())
+			if isBool(value):				
+				value = boolFromString(value)
 			elif isFloat(value):
 				value = float(value)
 			elif isInt(value):
@@ -144,14 +155,14 @@ class GUI():
 		# Get main window
 		self.main = self.builder.get_object("main")
 
-		# Get main switch
-		self.main_switch = self.builder.get_object("de-effects")	
-		self.main_switch.connect("button-press-event", self.main_switch_event)
-		if os.path.isfile(AUTOSTART):
-			self.main_switch.set_active(True)
-
 		# Get main notebook
 		self.notebook = self.builder.get_object("notebook")		
+
+		# Get main switch
+		self.main_switch = self.builder.get_object("de-effects")	
+		self.main_switch.connect("notify::active", self.main_switch_event)
+		if os.path.isfile(AUTOSTART):
+			self.main_switch.set_active(True)
 	
 		# Shadow
 		#
@@ -161,7 +172,7 @@ class GUI():
 		# Main switch 
 		self.shadow = self.builder.get_object("shadow")
 		self.shadow.set_active(getBool("shadow"))
-		self.shadow.connect("button-press-event", self.shadow_switch)
+		self.shadow.connect("notify::active", self.shadow_switch)
 		
 		# Panel shadow bool
 		self.panel_shadow = self.builder.get_object("panel_shadow")
@@ -185,7 +196,7 @@ class GUI():
 		# Main switch
 		self.fading = self.builder.get_object("fading")
 		self.fading.set_active(getBool("fading"))
-		self.fading.connect("button-press-event", self.fading_switch)
+		self.fading.connect("notify::active", self.fading_switch)
 
 		# No fading openclose
 		self.fading_openclose = self.builder.get_object("fading-openclose")
@@ -339,23 +350,24 @@ class GUI():
 
 	def main_switch_event(self, obj, opt = None):
 		# Switch Desktop effects on/off
-		self.notebook.set_sensitive(invertBool(self.main_switch.get_active()))
+		val = self.main_switch.get_active()
+		self.notebook.set_sensitive(val)
 
-		if os.path.isfile(AUTOSTART):
+		if not val and os.path.exists(AUTOSTART):
 			# Delete .composite_enabled 
 			os.remove(AUTOSTART)
-		else:
+		elif val and not os.path.exists(AUTOSTART):
 			# Touch .composite_enabled
 			with open(AUTOSTART, "w+") as f:
 				f.write("# Paranoid composite enabled\n# delete this file to disable composite manager\n")
 
 	def fading_switch(self, obj, opt = None):
 		# Switch Fading on/off
-		self.fading_box.set_sensitive(invertBool(self.fading.get_active()))	
+		self.fading_box.set_sensitive(self.fading.get_active())	
 
 	def shadow_switch(self, obj, opt = None):
 		# Switch Shadow on/off
-		self.shadow_box.set_sensitive(invertBool(self.shadow.get_active()))
+		self.shadow_box.set_sensitive(self.shadow.get_active())
 
 	def thread_killcompton(self):
 		thrd = RestartCompton(self)
@@ -391,7 +403,7 @@ class GUI():
 			'blur-background-fixed': self.blur_background_fixed.get_active(),
 			'detect-rounded-corners': self.detect_rounded_corners.get_active()
 		}
-		
+				
 		#print settings2file[7][1]/10
 
 		# Open and read old configuration file
@@ -405,17 +417,17 @@ class GUI():
 		for item, value in settings2file.items():
 			string_start = r"^%s =(.*);" % item
 			if re.search(string_start,old_config,re.MULTILINE):
-				old_config = (re.sub(string_start, r"^%(item)s = %(value)s;" % {"item":item, "value":str(value)}, old_config))
+				old_config = re.sub(string_start, r"%(item)s = %(value)s;" % {"item":item, "value":str(value)}, old_config,flags=re.MULTILINE)
 			else:
 				old_config = old_config + "%(item)s = %(value)s;\n" % {"item":item, "value":str(value)}
 			
 		# Fix uppercase
-		old_config = (re.sub("False","false",old_config))
-		old_config = (re.sub("True","true",old_config))
+		old_config = re.sub("False","false",old_config)
+		old_config = re.sub("True","true",old_config)
 
 		# Float fix?
-		old_config = (re.sub("00000","",old_config))
-
+		old_config = re.sub("00000","",old_config)
+		
 		# Debug
 		#print old_config
 
