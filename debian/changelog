@@ -1,3 +1,16 @@
+paranoid (1.1.0-1) unstable; urgency=low
+
+  [ Giuseppe 'GsC_RuL3Z' Corti ]
+  * Added Backend selection
+
+  [ Eugenio Paolantonio (g7) ]
+  * Ensure we overwrite strings, too.
+  * Refactored some code. If things breaks now, it's my fault.
+  * Bug fixes.
+  * Some UI changes.
+
+ -- Eugenio Paolantonio (g7) <me@medesimo.eu>  Mon, 02 Sep 2013 19:19:15 +0200
+
 paranoid (1.0.4-1) unstable; urgency=low
 
   [ Giuseppe Corti ]
