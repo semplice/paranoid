@@ -342,10 +342,13 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="lb-fade-delta">
+                              <object class="GtkLabel" id="lalaslas1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_top">60</property>
+                                <property name="halign">center</property>
+                                <property name="valign">start</property>
+                                <property name="margin_top">1</property>
+                                <property name="margin_bottom">18</property>
                                 <property name="label" translatable="yes">Fade delta</property>
                               </object>
                               <packing>

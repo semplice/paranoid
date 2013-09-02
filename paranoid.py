@@ -19,7 +19,6 @@
 
 from gi.repository import Gtk, GObject
 from threading import Thread
-import gobject
 import os
 import re
 import string
