@@ -22,7 +22,7 @@
     <property name="border_width">2</property>
     <property name="title" translatable="yes">Visual effects preferences</property>
     <property name="resizable">False</property>
-    <property name="icon_name">preferences-system-windows</property>
+    <property name="icon_name">desktop-effects</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
@@ -35,11 +35,9 @@
             <child>
               <object class="GtkButton" id="defaults_button">
                 <property name="label">Defaults</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="image">image1</property>
               </object>
               <packing>
@@ -51,11 +49,9 @@
             <child>
               <object class="GtkButton" id="save">
                 <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -113,10 +109,8 @@
                 </child>
                 <child>
                   <object class="GtkSwitch" id="de-effects">
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="use_action_appearance">False</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -164,11 +158,9 @@
                                 <child>
                                   <object class="GtkCheckButton" id="panel_shadow">
                                     <property name="label" translatable="yes">Panel shadow</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                   </object>
@@ -181,11 +173,9 @@
                                 <child>
                                   <object class="GtkCheckButton" id="clear_shadow">
                                     <property name="label" translatable="yes">Clear shadow</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                   </object>
@@ -277,10 +267,8 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="shadow">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="use_action_appearance">False</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -316,11 +304,9 @@
                             <child>
                               <object class="GtkCheckButton" id="fading-openclose">
                                 <property name="label" translatable="yes">Fading openclose</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
                               </object>
@@ -403,10 +389,8 @@
                         </child>
                         <child>
                           <object class="GtkSwitch" id="fading">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="use_action_appearance">False</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -654,11 +638,9 @@
                                         <child>
                                           <object class="GtkCheckButton" id="inactive-opacity-override">
                                             <property name="label" translatable="yes">Inactive opacity override</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -671,11 +653,9 @@
                                         <child>
                                           <object class="GtkCheckButton" id="shadow-ignore-shaped">
                                             <property name="label" translatable="yes">Shadow ignore shaped</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -688,11 +668,9 @@
                                         <child>
                                           <object class="GtkCheckButton" id="mark-wmwin-focused">
                                             <property name="label" translatable="yes">Mark wmwin focused</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -705,11 +683,9 @@
                                         <child>
                                           <object class="GtkCheckButton" id="detect-rounded-corners">
                                             <property name="label" translatable="yes">Detect rounded corners</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -722,11 +698,9 @@
                                         <child>
                                           <object class="GtkCheckButton" id="blur-background-fixed">
                                             <property name="label" translatable="yes">Blur background fixed</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
